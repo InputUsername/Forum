@@ -5,9 +5,19 @@ namespace forum;
 class TemplateException extends \Exception {}
 
 class Template {
+	// Template includes regex
+	private final static $INC_REGEX = '/\{\{\s*include "(.+)"\s*\}\}/';
+
+	// Template variable regex
+	private final static $VAR_REGEX = '/\{\{([A-Za-z_][A-Za-z0-9_]*)\}\}/';
+
+	// Main template file
 	private $file;
+
+	// Template values
 	private $templateValues;
 
+	// Prepared template
 	private $prepared;
 
 	public function __construct($file) {
@@ -68,22 +78,41 @@ class Template {
 		$content = file_get_contents($file);
 
 		/*
-		Prepare the template by replacing $variables by the values bound
-		to the same name in the template instance
+		Include files
 		*/
-		$prepared = preg_replace('/\$([A-Za-z_][A-Za-z0-9_]*)/', function($matches) {
-			$name = $matches[0];
-			if (!isset($this->templateValues[$name])) {
-				return '<no template variable ' . $name . '>';
+		$prepared = preg_replace(Template::$INC_REGEX, function($matches) {
+			$path = $matches[0];
+			if (!file_exists($path)) {
+				return '<no such file ' . $path . '>';
 			}
-			return $this->templateValues[$name];
+			return new Template($path)->prepare()->output();
 		}, $content);
 
 		if ($prepared === NULL) {
 			throw new TemplateException('There was an error preparing the template');
 		}
 
+		if (count($this->templateValues) > 0) {
+			/*
+			Prepare the template by replacing {{variables}} by the values bound
+			to the same name in the template instance
+			*/
+			$prepared = preg_replace(Template::$VAR_REGEX, function($matches) {
+				$name = $matches[0];
+				if (!isset($this->templateValues[$name])) {
+					return '<no template variable ' . $name . '>';
+				}
+				return $this->templateValues[$name];
+			}, $prepared);
+		}
+
+		if ($prepared === NULL) {
+			throw new TemplateException('There was an error preparing the template');
+		}
+
 		$this->prepared = $prepared;
+
+		return $this;
 	}
 
 	/*
