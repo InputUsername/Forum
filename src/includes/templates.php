@@ -9,7 +9,7 @@ class Template {
 	private final static $INC_REGEX = '/\{\{\s*include "(.+)"\s*\}\}/';
 
 	// Template variable regex
-	private final static $VAR_REGEX = '/\{\{([A-Za-z_][A-Za-z0-9_]*)\}\}/';
+	private final static $VAR_REGEX = '/\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}/';
 
 	// Main template file
 	private $file;
