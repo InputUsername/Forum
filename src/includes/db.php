@@ -4,6 +4,8 @@ namespace forum\database;
 
 require_once('config.php');
 
+class DatabaseException extends \Exception {}
+
 class Database {
     private $connection;
     private $connected = false;
@@ -19,7 +21,7 @@ class Database {
         );
 
         if ($this->connection->connect_errno) {
-            throw new \Exception($this->connection->connect_error);
+            throw new DatabaseException($this->connection->connect_error);
         }
 
         $this->connected = true;
@@ -33,14 +35,14 @@ class Database {
 
     public function query($query) {
         if (!$this->connected) {
-            return false;
+            throw new DatabaseException('Not connected to database');
         }
         return $this->connection->query($this->secure($query));
     }
 
     private function secure($query) {
         if (!$this->connected) {
-            return false;
+            throw new DatabaseException('Not connected to database');
         }
         return $this->connection->real_escape_string($query);
     }
