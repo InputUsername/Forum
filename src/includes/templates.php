@@ -2,6 +2,18 @@
 
 namespace forum;
 
+function joinPaths() {
+    $paths = array();
+
+    foreach (func_get_args() as $arg) {
+        if ($arg !== '') {
+			$paths[] = $arg;
+		}
+    }
+
+    return preg_replace('#/+#', '/', join('/', $paths));
+}
+
 class TemplateException extends \Exception {}
 
 class Template {
@@ -81,7 +93,7 @@ class Template {
 		Include files
 		*/
 		$prepared = preg_replace(Template::$INC_REGEX, function($matches) {
-			$path = $matches[0];
+			$path = joinPaths(basename($file), $matches[0]);
 			if (!file_exists($path)) {
 				return '<no such file ' . $path . '>';
 			}
