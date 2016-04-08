@@ -4,6 +4,14 @@ namespace forum;
 
 require_once($config['smarty_dir'] . 'Smarty.class.php');
 
+$dirs = array('templates_c', 'cache', 'configs');
+foreach ($dirs as $dirname) {
+	$dir = 'includes/smarty_dirs/' . $dirname;
+	if (!is_dir($dir)) {
+		mkdir($dir);
+	}
+}
+
 $smarty = new \Smarty();
 
 $smarty->setTemplateDir('includes/templates/');
