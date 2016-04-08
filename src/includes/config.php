@@ -13,5 +13,5 @@ $config['mysql']['user'] = 'root';
 $config['mysql']['pass'] = '';
 $config['mysql']['db'] = 'forum';
 
-// Smarty include dir, relative to root
+// Smarty include dir
 $config['smarty_dir'] = 'includes/smarty-3.1.29/libs/';
