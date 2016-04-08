@@ -3,7 +3,7 @@
 {/block}
 {block name=content}
 <div id="userInfo">
-	{assign var="profilePicture" value="assets/uploads/profile/{$user->profilePicture}"}
+	{assign var="profilePicture" value="uploads/profile/{$user->profilePicture}"}
 	{if !file_exists($profilePicture)}
 		{assign var="profilePicture" value="custom_assets/profile_default.png"}
 	{/if}
