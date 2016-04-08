@@ -16,5 +16,7 @@ $smarty->setCompileDir('includes/templates_c/');
 // Assign common variables
 $smarty->assign('forumName', 'Forum');
 $smarty->assign('logoMain', '/custom_assets/logo_main.png');
+$smarty->assign('iconMain', '/custom_assets/icon_128.png');
+$smarty->assign('iconSmall', '/custom_assets/icon_64.png');
 
 ?>
