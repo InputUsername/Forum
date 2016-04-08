@@ -1,3 +1,14 @@
+#userInfo {
+	background-color: #aaa;
+
+	padding: 1em;
+}
+
+.admin:after {
+	color: #b00;
+	content: " •";
+}
+
 #userImage {
 	width: 128px;
 	height: 128px;

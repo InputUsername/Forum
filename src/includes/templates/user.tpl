@@ -14,7 +14,7 @@
 	<img id="userImage" src="/{$profilePicture}" alt="{$user->username}">
 	{* /Profile picture *}
 
-	<h1 id="userName">{$user->username}</h1>
+	<h1 id="userName" {if $user->isAdmin}class="admin"{/if}>{$user->username}</h1>
 
 	{* Real name *}
 	{if $user->realName != ""}
