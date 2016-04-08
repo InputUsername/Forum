@@ -1,6 +1,9 @@
 {extends file="main.tpl"}
+
 {block name="head" prepend}
+<link rel="stylesheet" href="assets/css/user.css" type="text/css">
 {/block}
+
 {block name=content}
 <div id="userInfo">
 	{assign var="profilePicture" value="uploads/profile/{$user->profilePicture}"}
