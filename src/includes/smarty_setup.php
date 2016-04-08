@@ -13,4 +13,8 @@ $smarty = new \Smarty();
 $smarty->setTemplateDir('includes/templates/');
 $smarty->setCompileDir('includes/templates_c/');
 
+// Assign common variables
+$smarty->assign('forumName', 'Forum');
+$smarty->assign('logoMain', '/custom_assets/logo_main.png');
+
 ?>
