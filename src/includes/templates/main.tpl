@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{block name="meta"}
 	<meta charset="utf-8">
+	{block name="meta"}
 	<meta name="description" content="">
 	{/block}
 
