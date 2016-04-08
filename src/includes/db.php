@@ -1,6 +1,6 @@
 <?php
 
-namespace forum\database;
+namespace forum;
 
 require_once('config.php');
 
@@ -33,14 +33,14 @@ class Database {
         }
     }
 
-    public function query($query) {
+    public function query($queryStr) {
         if (!$this->connected) {
             throw new DatabaseException('Not connected to database');
         }
-        return $this->connection->query($this->secure($query));
+        return $this->connection->query($this->secure($queryStr));
     }
 
-    private function secure($query) {
+    private function secure($queryStr) {
         if (!$this->connected) {
             throw new DatabaseException('Not connected to database');
         }
