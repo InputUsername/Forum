@@ -2,23 +2,14 @@
 
 namespace forum;
 
-require_once('config.php');
-
 class DatabaseException extends \Exception {}
 
 class Database {
     private $connection;
     private $connected = false;
 
-    public function connect() {
-        global $config;
-
-        $this->connection = new \mysqli(
-            $config['mysql']['host'],
-            $config['mysql']['user'],
-            $config['mysql']['pass'],
-            $config['mysql']['db']
-        );
+    public function connect($host, $user, $password, $database) {
+        $this->connection = new \mysqli($host, $user, $password, $database);
 
         if ($this->connection->connect_errno) {
             throw new DatabaseException($this->connection->connect_error);
@@ -46,4 +37,26 @@ class Database {
         }
         return $this->connection->real_escape_string($query);
     }
+
+	public function prepare($queryStr, &$params) {
+		if (!$this->connected) {
+			throw new DatabaseException('Not connected to database');
+		}
+
+		$stmt = $this->connection->prepare($queryStr);
+		if (!$stmt) {
+			throw new DatabaseException('Could not prepare query');
+		}
+
+		foreach ($params as $type => $param) {
+			$stmt->bind_param($type, $param);
+		}
+
+		return $stmt;
+	}
+
+	public function executePrepared($prepared) {
+		$prepared->execute();
+		return $prepared->get_result();
+	}
 }
