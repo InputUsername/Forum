@@ -4,9 +4,6 @@ namespace forum;
 
 $config = array();
 
-// Upload directory for profile images
-$config['profile_upload_dir'] = 'assets/uploads/profile/';
-
 $config['mysql'] = array();
 $config['mysql']['host'] = 'localhost';
 $config['mysql']['user'] = 'root';
