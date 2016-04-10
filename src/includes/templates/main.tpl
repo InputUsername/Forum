@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	{block name="meta"}
-	<meta name="theme-color" content="">
+	<meta name="theme-color" content="#808080">
 	<meta name="description" content="">
 	{/block}
 
