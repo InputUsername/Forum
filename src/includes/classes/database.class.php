@@ -35,7 +35,7 @@ class Database {
         if (!$this->connected) {
             throw new DatabaseException('Not connected to database');
         }
-        return $this->connection->real_escape_string($query);
+        return $this->connection->real_escape_string($queryStr);
     }
 
 	public function prepare($queryStr, &$params) {
