@@ -36,7 +36,7 @@ a:hover, a:active {
 }
 
 .box {
-	padding: 1em 4em;
+	padding: 1% 4%;
 }
 
 .button, .button:link {
@@ -111,7 +111,7 @@ a:hover, a:active {
 
 #userControls {
 	position: absolute;
-	right: 5em;
+	right: 4%;
 	top: 50%;
 	transform: translateY(-50%);
 }
@@ -131,7 +131,7 @@ a:hover, a:active {
 
 #footer {
 	background-color: #aaa;
-	color: #fff;
+	color: #000;
 
 	text-align: center;
 }
