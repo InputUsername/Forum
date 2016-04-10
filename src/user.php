@@ -27,7 +27,8 @@ try {
 }
 catch (DatabaseException $e) {
 	$smarty->assign('pageTitle', 'Database error');
-	$smarty->display('');
+	$smarty->display('errors/database_error.tpl');
+	die();
 }
 
 // Query database
