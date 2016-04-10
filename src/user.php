@@ -2,32 +2,58 @@
 
 namespace forum;
 
+require_once('includes/config.php');
+require_once('includes/smarty_setup.php');
+
+// Check GET parameters
+
 if (!isset($_GET['id'])) {
-	die('incorrect params');
+	$_GET['id'] = '0';
 }
 
-require_once('includes/config.php');
-require_once('includes/database.class.php');
-require_once('includes/user.class.php');
+require_once('includes/classes/database.class.php');
+require_once('includes/classes/user.class.php');
+
+// Connect to database
 
 $db = new Database();
-$db->connect(
-	$config['mysql']['host'],
-	$config['mysql']['user'],
-	$config['mysql']['pass'],
-	$config['mysql']['db']
-);
+try {
+	$db->connect(
+		$config['mysql']['host'],
+		$config['mysql']['user'],
+		$config['mysql']['pass'],
+		$config['mysql']['db']
+	);
+}
+catch (DatabaseException $e) {
+	$smarty->assign('pageTitle', 'Database error');
+	$smarty->display('');
+}
 
-$params = array('i' => $_GET['id']);
+// Query database
+
+$params = array(
+	'i' => preg_replace('/[^\d]/', '', $_GET['id'])
+);
 
 $stmt = $db->prepare('SELECT * FROM users WHERE id=? LIMIT 1', $params);
 $result = $db->executePrepared($stmt);
 
+// Error or something
 if (!$result) {
-	die('can\'t retrieve user');
+	$smarty->assign('pageTitle', 'User not found');
+	$smarty->display('errors/user_not_found.tpl');
+	die();
 }
 
 $row = $result->fetch_assoc();
+
+// Cannot find user
+if (empty($row)) {
+	$smarty->assign('pageTitle', 'User not found');
+	$smarty->display('errors/user_not_found.tpl');
+	die();
+}
 
 $user = new User(
 	$row['id'],
@@ -39,11 +65,9 @@ $user = new User(
 	$row['is_admin']
 );
 
-require_once('includes/smarty_setup.php');
+// Show user
 
 $smarty->assign('pageTitle', 'User profile: ' . $user->username);
 $smarty->assign('user', $user);
 
 $smarty->display('user.tpl');
-
-?>
