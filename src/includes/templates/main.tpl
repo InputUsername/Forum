@@ -20,7 +20,7 @@
 <body>
 	<div id="wrapper">
 		{include file="header.tpl"}
-		<main id="content" class="box">
+		<main id="content">
 			{block name="content"}{/block}
 		</main>
 		{include file="footer.tpl"}

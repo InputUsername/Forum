@@ -90,8 +90,6 @@ a:hover, a:active {
 	width: calc(20px + 0.5em);
 	height: calc(20px + 0.5em);
 
-	margin: 0;
-
 	border: none;
 
 	background-color: #b00;
@@ -123,8 +121,10 @@ a:hover, a:active {
 /*** Content ***/
 
 #content {
-	padding-top: 2em;
-	padding-bottom: 2em;
+	background-color: #ddd;
+
+	margin: 1% 4%;
+	padding: 1%;
 }
 
 /*** Footer ***/
