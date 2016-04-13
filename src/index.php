@@ -36,9 +36,7 @@ try {
 	$result = $db->query('SELECT * FROM subforums WHERE parent_subforum_id IS NULL');
 }
 catch (DatabaseException $e) {
-	$smarty->assign('pageTitle', 'Database error');
-	$smarty->assign('errorMessage', $db->getError());
-	$smarty->display('errors/database_error.tpl');
+	databaseErrorPage($smarty, $e->getMessage());
 
 	$db->disconnect();
 
