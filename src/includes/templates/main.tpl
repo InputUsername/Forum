@@ -27,7 +27,7 @@
 <body>
 	<div id="wrapper">
 		{include file="components/header.tpl"}
-		<main id="content">
+		<main class="box" id="content">
 			{block name="content"}{/block}
 		</main>
 		{include file="components/footer.tpl"}

@@ -1,6 +1,6 @@
 {extends file="main.tpl"}
 
-{block name="head" prepend}
+{block name="head" append}
 <link rel="stylesheet" href="{$root}assets/css/user.css" type="text/css">
 {/block}
 

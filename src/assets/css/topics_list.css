@@ -1,4 +1,8 @@
-.subforumBox {
+.topicsList {
+	margin-top: 1%;
+}
+
+.topicBox {
 	background-color: #aaa;
 
 	margin-top: 1%;
