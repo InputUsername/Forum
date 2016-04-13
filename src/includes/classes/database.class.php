@@ -25,17 +25,33 @@ class Database {
         }
     }
 
+    public function getError() {
+        return $this->connection->error;
+    }
+
+    public function getErrNo() {
+        return $this->connection->errno;
+    }
+
     public function query($queryStr) {
         if (!$this->connected) {
             throw new DatabaseException('Not connected to database');
         }
-        return $this->connection->query($this->secure($queryStr));
+
+        $result = $this->connection->query($this->secure($queryStr));
+
+        if (!$result) {
+            throw new DatabaseException($this->getError());
+        }
+
+        return $result;
     }
 
     private function secure($queryStr) {
         if (!$this->connected) {
             throw new DatabaseException('Not connected to database');
         }
+
         return $this->connection->real_escape_string($queryStr);
     }
 
@@ -46,7 +62,7 @@ class Database {
 
 		$stmt = $this->connection->prepare($queryStr);
 		if (!$stmt) {
-			throw new DatabaseException('Could not prepare query');
+			throw new DatabaseException($this->getError());
 		}
 
 		foreach ($params as $type => $param) {
@@ -57,7 +73,16 @@ class Database {
 	}
 
 	public function executePrepared($prepared) {
-		$prepared->execute();
-		return $prepared->get_result();
+		if (!$prepared->execute()) {
+            throw new DatabaseException($this->getError());
+        }
+
+		$result = $prepared->get_result();
+
+        if (!$result) {
+            throw new DatabaseException($this->getError(), $this->getErrNo());
+        }
+
+        return $result;
 	}
 }

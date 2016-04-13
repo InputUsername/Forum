@@ -29,6 +29,8 @@ try {
 }
 catch (DatabaseException $e) {
 	$smarty->assign('pageTitle', 'Database error');
+	$smarty->assign('errorMessage', $e->getMessage());
+	$smarty->assign('errorCode', $e->getCode());
 	$smarty->display('errors/database_error.tpl');
 	die();
 }
@@ -47,12 +49,12 @@ $result = $db->executePrepared($stmt);
 // Error getting current subforum
 
 if (!$result) {
-
+	
 }
 
 $currentSubforum = $result->fetch_assoc();
 
-$stmt = $db->prepare('SELECT * FROM subforums WHERE parent=?', $params);
+$stmt = $db->prepare('SELECT * FROM subforums WHERE parent_subforum_id=?', $params);
 $result = $db->executePrepared($stmt);
 
 // Error getting list of subforums
@@ -88,6 +90,7 @@ while ($row = $result->fetch_assoc()) {
 
 $smarty->assign('pageTitle', 'Forum: ' . $currentSubforum['name']);
 
+$smarty->assign('currentSubforum', $currentSubforum);
 $smarty->assign('subforums', $subforums);
 $smarty->assign('topics', $topics);
 

@@ -32,11 +32,14 @@ catch (DatabaseException $e) {
 * Query database
 *******************/
 
-$result = $db->query('SELECT * FROM subforums WHERE parent IS NULL');
+try {
+	$result = $db->query('SELECT * FROM subforums WHERE parent_subforum_id IS NULL');
+}
+catch (DatabaseException $e) {
+	// Error or something
 
-// Error or something
-if (!$result) {
 	$smarty->assign('pageTitle', 'Database error');
+	$smarty->assign('errorMessage', $db->getError());
 	$smarty->display('errors/database_error.tpl');
 
 	$db->disconnect();

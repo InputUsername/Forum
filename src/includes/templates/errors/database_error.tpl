@@ -5,11 +5,16 @@
 {/block}
 
 {block name="content"}
-<div id="errorBox">
+<div class="section" id="errorBox">
 	<h1>Database error</h1>
 	<h2>There was an error establishing a connection with or fetching data from the database.</h2>
-	{if isset($errorMessage) && isset($errorCode)}
-		<p>{$errorMessage} ({$errorCode})</p>
+
+	{if isset($errorMessage)}
+		{assign var="error" value="{$errorMessage}"}
+		{if isset($errorCode)}
+			{assign var="error" value="{$error} ($errorCode)"}
+		{/if}
+		<p>{$error}</p>
 	{/if}
 </div>
 {/block}
