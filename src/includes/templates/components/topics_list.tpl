@@ -6,7 +6,5 @@
 		<div class="topicBox">
 			<h2><a href="{$root}topic/{$topic.id}">{$topic.title}</a></h2>
 		</div>
-	{foreachelse}
-		{$topicsNotFoundMessage}
 	{/foreach}
 </div>

@@ -6,8 +6,7 @@
 
 {block name="content"}
 <div class="section">
-	{include file="components/subforums_list.tpl" subforumsTitle="Subforums"
-		subforumsList=$subforums subforumsNotFoundMessage="There are no subforums to display at this time."}
+	{include file="components/subforums_list.tpl" subforumsTitle="Forums"}
 </div>
 <div class="section">
 	TEMP TEST DEBUG REMOVE ME PLEASE
