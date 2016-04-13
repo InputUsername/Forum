@@ -1,9 +1,19 @@
-.admin:after {
-	color: #b00;
-	content: " •";
+#userInfo {
+	overflow: auto;
 }
 
 #userImage {
-	width: 128px;
-	height: 128px;
+	width: 192px;
+	height: 192px;
+
+	float: left;
+}
+
+#userDetails {
+	float: left;
+}
+
+.admin:after {
+	color: #b00;
+	content: " •";
 }
