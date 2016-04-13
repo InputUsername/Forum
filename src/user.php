@@ -5,16 +5,20 @@ namespace forum;
 require_once('includes/config.php');
 require_once('includes/smarty_setup.php');
 
-// Check GET parameters
+/************************
+* Check GET parameters
+*************************/
 
 if (!isset($_GET['id'])) {
 	$_GET['id'] = '0';
 }
 
+/************************
+* Connect to database
+*************************/
+
 require_once('includes/classes/database.class.php');
 require_once('includes/classes/user.class.php');
-
-// Connect to database
 
 $db = new Database();
 try {
@@ -31,7 +35,9 @@ catch (DatabaseException $e) {
 	die();
 }
 
-// Query database
+/************************
+* Query database
+*************************/
 
 $params = array(
 	'i' => preg_replace('/[^\d]/', '', $_GET['id'])
@@ -40,7 +46,8 @@ $params = array(
 $stmt = $db->prepare('SELECT * FROM users WHERE id=? LIMIT 1', $params);
 $result = $db->executePrepared($stmt);
 
-// Error or something
+// Query error
+
 if (!$result) {
 	$smarty->assign('pageTitle', 'User not found');
 	$smarty->display('errors/user_not_found.tpl');
@@ -50,6 +57,7 @@ if (!$result) {
 $row = $result->fetch_assoc();
 
 // Cannot find user
+
 if (empty($row)) {
 	$smarty->assign('pageTitle', 'User not found');
 	$smarty->display('errors/user_not_found.tpl');
@@ -66,7 +74,9 @@ $user = new User(
 	$row['is_admin']
 );
 
-// Show user
+/************************
+* Show user
+*************************/
 
 $smarty->assign('pageTitle', 'User profile: ' . $user->username);
 $smarty->assign('user', $user);
