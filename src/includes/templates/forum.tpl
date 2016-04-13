@@ -6,12 +6,14 @@
 {/block}
 
 {block name="content"}
-<div class="section">
-	{include file="components/subforums_list.tpl" subforumsTitle="Subforums"
-		subforumsNotFoundMessage="There are no subforums to display at this time."}
-</div>
-<div class="section">
-	{include file="components/topics_list.tpl" topicsTitle="Topics"
-		topicsNotFoundMessage="There are no topics to display at this time."}
-</div>
+{if $subforums}
+	<div class="section">
+		{include file="components/subforums_list.tpl" subforumsTitle="Subforums"}
+	</div>
+{/if}
+{if $topics}
+	<div class="section">
+		{include file="components/topics_list.tpl" topicsTitle="Topics in '{$currentSubforum['name']}'"}
+	</div>
+{/if}
 {/block}
