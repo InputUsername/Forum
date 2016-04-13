@@ -11,10 +11,10 @@
 	<title>{$pageTitle}</title>
 
 	{block name="head"}
-	<link rel="shortcut icon" href="{$iconSmall}">
+	<link rel="shortcut icon" href="{$root}{$iconSmall}">
 
-	<link rel="stylesheet" href="./assets/css/responsive.css" type="text/css">
-	<link rel="stylesheet" href="./assets/css/main.css" type="text/css">
+	<link rel="stylesheet" href="{$root}assets/css/responsive.css" type="text/css">
+	<link rel="stylesheet" href="{$root}assets/css/main.css" type="text/css">
 	{/block}
 </head>
 <body>

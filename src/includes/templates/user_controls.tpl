@@ -1,7 +1,7 @@
 <div id="userControls">
 	{if !$loggedIn}
-		<a id="loginButton" href="./login">Log In</a>
-		<a class="button" href="./register">Register</a>
+		<a id="loginButton" href="{$root}login">Log In</a>
+		<a class="button" href="{$root}register">Register</a>
 	{else}
 
 	{/if}

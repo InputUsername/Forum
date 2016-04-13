@@ -12,7 +12,7 @@ class Database {
         $this->connection = new \mysqli($host, $user, $password, $database);
 
         if ($this->connection->connect_errno) {
-            throw new DatabaseException($this->connection->connect_error);
+            throw new DatabaseException($this->connection->connect_error, $this->connection->connect_errno);
         }
 
         $this->connected = true;
@@ -21,6 +21,7 @@ class Database {
     public function disconnect() {
         if ($this->connected) {
             $this->connection->close();
+            $this->connected = false;
         }
     }
 

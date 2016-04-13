@@ -1,7 +1,7 @@
 {extends file="main.tpl"}
 
 {block name="head" prepend}
-<link rel="stylesheet" href="./assets/css/user.css" type="text/css">
+<link rel="stylesheet" href="{$root}assets/css/user.css" type="text/css">
 {/block}
 
 {block name=content}
@@ -11,7 +11,7 @@
 	{if !file_exists($profilePicture)}
 		{assign var="profilePicture" value="custom_assets/profile_default.png"}
 	{/if}
-	<img id="userImage" src="./{$profilePicture}" alt="{$user->username}">
+	<img id="userImage" src="{$root}{$profilePicture}" alt="{$user->username}">
 	{* /Profile picture *}
 
 	<h1 id="userName" {if $user->isAdmin}class="admin"{/if}>{$user->username}</h1>
