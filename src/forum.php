@@ -4,6 +4,7 @@ namespace forum;
 
 require_once('includes/config.php');
 require_once('includes/smarty_setup.php');
+require_once('includes/error_pages.php');
 require_once('includes/classes/database.class.php');
 
 /************************
@@ -28,10 +29,8 @@ try {
 	);
 }
 catch (DatabaseException $e) {
-	$smarty->assign('pageTitle', 'Database error');
-	$smarty->assign('errorMessage', $e->getMessage());
-	$smarty->assign('errorCode', $e->getCode());
-	$smarty->display('errors/database_error.tpl');
+	databaseErrorPage($smarty, $e->getMessage(), $e->getCode());
+
 	die();
 }
 
@@ -43,24 +42,34 @@ $params = array(
 	'i' => preg_replace('/[^\d]/', '', $_GET['id'])
 );
 
-$stmt = $db->prepare('SELECT * FROM subforums WHERE id=?', $params);
-$result = $db->executePrepared($stmt);
+// Query for the current subforum
 
-// Error getting current subforum
+try {
+	$stmt = $db->prepare('SELECT * FROM subforums WHERE id=?', $params);
+	$result = $db->executePrepared($stmt);
+}
+catch (DatabaseException $e) {
+	databaseErrorPage($smarty, $e->getMessage());
 
-if (!$result) {
-	
+	$db->disconnect();
+
+	die();
 }
 
 $currentSubforum = $result->fetch_assoc();
 
-$stmt = $db->prepare('SELECT * FROM subforums WHERE parent_subforum_id=?', $params);
-$result = $db->executePrepared($stmt);
+// Query for the subforums list
 
-// Error getting list of subforums
+try {
+	$stmt = $db->prepare('SELECT * FROM subforums WHERE parent_subforum_id=?', $params);
+	$result = $db->executePrepared($stmt);
+}
+catch (DatabaseException $e) {
+	databaseErrorPage($smarty, $e->getMessage());
 
-if (!$result) {
+	$db->disconnect();
 
+	die();
 }
 
 $subforums = array();
@@ -69,13 +78,18 @@ while ($row = $result->fetch_assoc()) {
 	$subforums[] = $row;
 }
 
-// Error getting list of topics in forum
+// Query for the topics list
 
-$stmt = $db->prepare('SELECT * FROM topics WHERE subforum_id=?', $params);
-$result = $db->executePrepared($stmt);
+try {
+	$stmt = $db->prepare('SELECT * FROM topics WHERE subforum_id=?', $params);
+	$result = $db->executePrepared($stmt);
+}
+catch (DatabaseException $e) {
+	databaseErrorPage($smarty, $e->getMessage());
 
-if (!$result) {
+	$db->disconnect();
 
+	die();
 }
 
 $topics = array();
@@ -95,3 +109,5 @@ $smarty->assign('subforums', $subforums);
 $smarty->assign('topics', $topics);
 
 $smarty->display('forum.tpl');
+
+$db->disconnect();

@@ -4,6 +4,7 @@ namespace forum;
 
 require_once('includes/config.php');
 require_once('includes/smarty_setup.php');
+require_once('includes/error_pages.php');
 require_once('includes/classes/database.class.php');
 
 /**********************
@@ -20,10 +21,7 @@ try {
 	);
 }
 catch (DatabaseException $e) {
-	$smarty->assign('pageTitle', 'Database error');
-	$smarty->assign('errorMessage', $e->getMessage());
-	$smarty->assign('errorCode', $e->getCode());
-	$smarty->display('errors/database_error.tpl');
+	databaseErrorPage($smarty, $e->getMessage(), $e->getCode());
 
 	die();
 }
@@ -32,12 +30,12 @@ catch (DatabaseException $e) {
 * Query database
 *******************/
 
+// Query for subforums list
+
 try {
 	$result = $db->query('SELECT * FROM subforums WHERE parent_subforum_id IS NULL');
 }
 catch (DatabaseException $e) {
-	// Error or something
-
 	$smarty->assign('pageTitle', 'Database error');
 	$smarty->assign('errorMessage', $db->getError());
 	$smarty->display('errors/database_error.tpl');

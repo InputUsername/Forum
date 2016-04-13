@@ -4,6 +4,7 @@ namespace forum;
 
 require_once('includes/config.php');
 require_once('includes/smarty_setup.php');
+require_once('includes/error_pages.php');
 require_once('includes/classes/database.class.php');
 require_once('includes/classes/user.class.php');
 
@@ -29,8 +30,8 @@ try {
 	);
 }
 catch (DatabaseException $e) {
-	$smarty->assign('pageTitle', 'Database error');
-	$smarty->display('errors/database_error.tpl');
+	databaseErrorPage($smarty, $e->getMessage(), $e->getCode());
+
 	die();
 }
 
@@ -42,14 +43,17 @@ $params = array(
 	'i' => preg_replace('/[^\d]/', '', $_GET['id'])
 );
 
-$stmt = $db->prepare('SELECT * FROM users WHERE id=? LIMIT 1', $params);
-$result = $db->executePrepared($stmt);
+// Query for the user
 
-// Query error
+try {
+	$stmt = $db->prepare('SELECT * FROM users WHERE id=? LIMIT 1', $params);
+	$result = $db->executePrepared($stmt);
+}
+catch (DatabaseException $e) {
+	databaseErrorPage($smarty, $e->getMessage());
 
-if (!$result) {
-	$smarty->assign('pageTitle', 'User not found');
-	$smarty->display('errors/user_not_found.tpl');
+	$db->disconnect();
+
 	die();
 }
 
@@ -60,6 +64,9 @@ $row = $result->fetch_assoc();
 if (empty($row)) {
 	$smarty->assign('pageTitle', 'User not found');
 	$smarty->display('errors/user_not_found.tpl');
+
+	$db->disconnect();
+
 	die();
 }
 
@@ -81,3 +88,5 @@ $smarty->assign('pageTitle', 'User profile: ' . $user->username);
 $smarty->assign('user', $user);
 
 $smarty->display('user.tpl');
+
+$db->disconnect();
