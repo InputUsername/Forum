@@ -5,7 +5,7 @@
 {/block}
 
 {block name=content}
-<div id="userInfo">
+<div class="section" id="userInfo">
 	{* Profile picture *}
 	{assign var="profilePicture" value="uploads/profile/{$user->profilePicture}"}
 	{if !file_exists($profilePicture)}
@@ -14,12 +14,14 @@
 	<img id="userImage" src="{$root}{$profilePicture}" alt="{$user->username}">
 	{* /Profile picture *}
 
-	<h1 id="userName" {if $user->isAdmin}class="admin"{/if}>{$user->username}</h1>
+	<div id="userDetails">
+		<h1 id="userName" {if $user->isAdmin}class="admin"{/if}>{$user->username}</h1>
 
-	{* Real name *}
-	{if $user->realName != ""}
-		<h2 id="userRealName">{$user->realName}</h2>
-	{/if}
-	{* /Real name *}
+		{* Real name *}
+		{if $user->realName != ""}
+			<h2 id="userRealName">{$user->realName}</h2>
+		{/if}
+		{* /Real name *}
+	</div>
 </div>
 {/block}

@@ -13,7 +13,7 @@
 	{/block}
 	{* /Changable meta tags *}
 
-	<title>{$pageTitle}</title>
+	<title>{$pageTitle} - {$forumName}</title>
 
 	{* Head includes, overridable *}
 	{block name="head"}
