@@ -4,6 +4,8 @@ namespace forum;
 
 require_once('includes/config.php');
 require_once('includes/smarty_setup.php');
+require_once('includes/classes/database.class.php');
+require_once('includes/classes/user.class.php');
 
 /************************
 * Check GET parameters
@@ -16,9 +18,6 @@ if (!isset($_GET['id'])) {
 /************************
 * Connect to database
 *************************/
-
-require_once('includes/classes/database.class.php');
-require_once('includes/classes/user.class.php');
 
 $db = new Database();
 try {
@@ -75,7 +74,7 @@ $user = new User(
 );
 
 /************************
-* Show user
+* Show user page
 *************************/
 
 $smarty->assign('pageTitle', 'User profile: ' . $user->username);

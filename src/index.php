@@ -5,7 +5,6 @@ namespace forum;
 require_once('includes/config.php');
 require_once('includes/smarty_setup.php');
 require_once('includes/classes/database.class.php');
-require_once('includes/classes/user.class.php');
 
 /**********************
 * Connect to database
@@ -50,6 +49,10 @@ $subforums = array();
 while ($row = $result->fetch_assoc()) {
 	$subforums[] = $row;
 }
+
+/********************
+* Show index page
+*********************/
 
 $smarty->assign('pageTitle', 'Index');
 
