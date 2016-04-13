@@ -1,3 +1,5 @@
+Options -Indexes
+
 RewriteEngine on
 
 RewriteRule user/(\d+) user.php?id=$1
