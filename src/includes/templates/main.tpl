@@ -19,11 +19,11 @@
 </head>
 <body>
 	<div id="wrapper">
-		{include file="header.tpl"}
+		{include file="components/header.tpl"}
 		<main id="content">
 			{block name="content"}{/block}
 		</main>
-		{include file="footer.tpl"}
+		{include file="components/footer.tpl"}
 	</div>
 </body>
 </html>
