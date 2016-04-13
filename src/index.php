@@ -7,7 +7,9 @@ require_once('includes/smarty_setup.php');
 require_once('includes/classes/database.class.php');
 require_once('includes/classes/user.class.php');
 
-// Connect to database
+/**********************
+* Connect to database
+**********************/
 
 $db = new Database();
 try {
@@ -20,17 +22,26 @@ try {
 }
 catch (DatabaseException $e) {
 	$smarty->assign('pageTitle', 'Database error');
+	$smarty->assign('errorMessage', $e->getMessage());
+	$smarty->assign('errorCode', $e->getCode());
 	$smarty->display('errors/database_error.tpl');
+
 	die();
 }
 
-// Query database
+/******************
+* Query database
+*******************/
 
 $result = $db->query('SELECT * FROM subforums WHERE parent IS NULL');
 
 // Error or something
 if (!$result) {
-	//TODO: error
+	$smarty->assign('pageTitle', 'Database error');
+	$smarty->display('errors/database_error.tpl');
+
+	$db->disconnect();
+
 	die();
 }
 
@@ -46,4 +57,4 @@ $smarty->assign('subforums', $subforums);
 
 $smarty->display('index.tpl');
 
-?>
+$db->disconnect();
