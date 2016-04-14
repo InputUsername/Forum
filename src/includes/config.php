@@ -4,8 +4,10 @@ namespace forum;
 
 $config = array();
 
+// Root folder
 $config['root'] = '/';
 
+// MySQL values
 $config['mysql'] = array();
 $config['mysql']['host'] = 'localhost';
 $config['mysql']['user'] = 'root';
