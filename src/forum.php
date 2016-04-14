@@ -61,7 +61,7 @@ $currentSubforum = $result->fetch_assoc();
 // Query for the subforums list
 
 try {
-	$stmt = $db->prepare('SELECT * FROM subforums WHERE parent_subforum_id=?', $params);
+	$stmt = $db->prepare('SELECT * FROM subforums WHERE parent_subforum_id=? ORDER BY category_id', $params);
 	$result = $db->executePrepared($stmt);
 }
 catch (DatabaseException $e) {
