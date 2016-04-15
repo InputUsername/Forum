@@ -65,7 +65,7 @@ try {
 
 	// Get subforums
 
-	$resultSubforums = $db->query('SELECT * FROM subforums WHERE parent_subforum_id IS NULL ORDER BY category_id, id');
+	$resultSubforums = $db->query('SELECT * FROM subforums WHERE parent_subforum_id IS NULL ORDER BY category_id IS NULL, id, category_id');
 }
 catch (DatabaseException $e) {
 	databaseErrorPage($smarty, $e->getMessage());
@@ -88,22 +88,28 @@ while ($row = $resultSubforums->fetch_assoc()) {
 	if ($catId) {
 		$catName = $categoryNames[$catId];
 
-		if ($currentCategoryId != $catId) {
-			$subforums[] = new Category($catId, $catName, NULL);
+		if ($catId != $currentCategoryId) {
+			$subforums[] = array(new Category($catId, $catName, NULL));
 			$currentCategoryId = $catId;
 		}
-	}
 
-	$subforums[] = new Subforum($row['id'], $row['name'], NULL, $catId);
+		$subforums[count($subforums) - 1][] = new Subforum($row['id'], $row['name'], NULL, $catId);
+	}
+	else {
+		$subforums[] = new Subforum($row['id'], $row['name'], NULL, $catId);
+	}
 }
 
-header('Content-type: text/plain');
-print_r($subforums);
-die();
+// header('Content-type: text/plain');
+// print_r($subforums);
+// die();
 
 /********************
 * Show index page
 *********************/
+
+require_once('includes/smarty_plugins/function.subforum_box.php');
+$smarty->registerPlugin('function', 'subforum_box', 'smarty_function_subforum_box');
 
 $smarty->assign('pageTitle', 'Index');
 
