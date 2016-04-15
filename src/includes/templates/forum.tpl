@@ -15,5 +15,10 @@
 	<div class="section">
 		{include file="components/topics_list.tpl" topicsTitle="Topics in '{$currentSubforum['name']}'"}
 	</div>
+{else}
+	<div class="section">
+		<h1>Topics</h1>
+		<h2>There are no topics found in this subforum.</h2>
+	</div>
 {/if}
 {/block}

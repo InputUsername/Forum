@@ -5,6 +5,8 @@ namespace forum;
 require_once('includes/config.php');
 require_once('includes/smarty_setup.php');
 require_once('includes/error_pages.php');
+require_once('includes/subforum_functions.php');
+
 require_once('includes/classes/database.class.php');
 
 /************************
@@ -61,8 +63,14 @@ $currentSubforum = $result->fetch_assoc();
 // Query for the subforums list
 
 try {
-	$stmt = $db->prepare('SELECT * FROM subforums WHERE parent_subforum_id=? ORDER BY category_id', $params);
-	$result = $db->executePrepared($stmt);
+	// Get category IDs associated with top-level subforums
+
+	$categoryNames = getCategoryNames($db);
+
+	// Get subforums
+
+	$stmt = $db->prepare('SELECT * FROM subforums WHERE parent_subforum_id=? ORDER BY category_id IS NULL, category_id, id', $params);
+	$resultSubforums = $db->executePrepared($stmt);
 }
 catch (DatabaseException $e) {
 	databaseErrorPage($smarty, $e->getMessage());
@@ -72,11 +80,7 @@ catch (DatabaseException $e) {
 	die();
 }
 
-$subforums = array();
-
-while ($row = $result->fetch_assoc()) {
-	$subforums[] = $row;
-}
+$subforums = generateSubforumsList($resultSubforums, $categoryNames);
 
 // Query for the topics list
 

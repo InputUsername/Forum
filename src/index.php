@@ -39,11 +39,11 @@ catch (DatabaseException $e) {
 try {
 	// Get category IDs associated with top-level subforums
 
-	$categoryNames = getCategoryNames($db, 'parent_subforum_id IS NULL');
+	$categoryNames = getCategoryNames($db);
 
 	// Get subforums
 
-	$resultSubforums = $db->query('SELECT * FROM subforums WHERE parent_subforum_id IS NULL ORDER BY category_id IS NULL, id, category_id');
+	$resultSubforums = $db->query('SELECT * FROM subforums WHERE parent_subforum_id IS NULL ORDER BY category_id IS NULL, category_id, id');
 }
 catch (DatabaseException $e) {
 	databaseErrorPage($smarty, $e->getMessage());
