@@ -5,7 +5,7 @@
 {/block}
 
 {block name=content}
-<div class="section" id="userInfo">
+<div class="section" id="userInfoSection">
 	{* Profile picture *}
 	{assign var="profilePicture" value="uploads/profile/{$user->profilePicture}"}
 	{if !file_exists($profilePicture)}
