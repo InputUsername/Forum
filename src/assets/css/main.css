@@ -37,6 +37,17 @@ input {
 	outline: none;
 }
 
+/* Text input */
+
+input[type="text"], input[type="password"] {
+	height: 20px;
+
+	margin: 0;
+	padding: 0.3em;
+
+	border: none;
+}
+
 /* Links */
 
 a, a:link {
@@ -82,6 +93,19 @@ a:hover, a:active {
 	background-color: #d33;
 }
 
+input.button {
+	border: none;
+}
+
+input.button:hover {
+	cursor: pointer;
+}
+
+/* Form row */
+.formRow:not(:last-child) {
+	margin-bottom: 1%;
+}
+
 /*** Header ***/
 
 #header {
@@ -111,14 +135,14 @@ a:hover, a:active {
 	height: 20px;
 
 	margin: 0;
-	padding: 0.25em;
+	padding: 0.3em;
 
 	border: none;
 }
 
 #searchButton {
-	width: calc(20px + 0.5em);
-	height: calc(20px + 0.5em);
+	width: calc(20px + 0.6em);
+	height: calc(20px + 0.6em);
 
 	border: none;
 
