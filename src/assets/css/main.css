@@ -161,6 +161,8 @@ input.button:hover {
 	cursor: pointer;
 }
 
+/* User controls */
+
 #userControls {
 	position: absolute;
 	right: 8%;
@@ -174,6 +176,24 @@ input.button:hover {
 
 #userControlsImage {
 	height: 40px;
+}
+
+#userControlsMenu {
+	position: absolute;
+	right: 0;
+	top: calc(50% + 20px);
+
+	padding: 1em;
+
+	list-style-type: none;
+
+	background-color: #888;
+
+	display: none;
+}
+
+#userControlsMenu.open {
+	display: block;
 }
 
 /*** Content ***/

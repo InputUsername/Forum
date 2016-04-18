@@ -3,6 +3,7 @@ Options -Indexes
 RewriteEngine on
 
 RewriteRule login$ login.php
+RewriteRule logout$ logout.php
 RewriteRule user/(\d+)$ user.php?id=$1
 RewriteRule forum/(\d+)$ forum.php?id=$1
 RewriteRule topic/(\d+)$ topic.php?id=$1
