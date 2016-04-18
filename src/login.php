@@ -5,6 +5,8 @@ namespace forum;
 require_once('includes/config.php');
 require_once('includes/smarty_setup.php');
 require_once('includes/error_pages.php');
+require_once('includes/misc.php');
+
 require_once('includes/classes/database.class.php');
 require_once('includes/classes/user.class.php');
 
@@ -27,34 +29,59 @@ catch (DatabaseException $e) {
 	die();
 }
 
+/***********************
+* Start the session
+************************/
+
+session_start();
+
+if ($_SESSION['loggedIn']) {
+	redirect($config['root']);
+}
+
 /************************
 * Check POST parameters
 *************************/
 
 if (isset($_POST['login']) && isset($_POST['username']) && isset($_POST['password'])) {
 	$username = preg_replace('/\W/', '', $_POST['username']);
-	$password = $_POST['password']; //TODO: check password
-	
+	$password = $_POST['password'];
+
 	$params = array(
-		's' => $username,
-		's' => $password
+		's' => $username
 	);
-	
+
 	try {
-		$stmt = $db->prepare('SELECT * FROM users WHERE username=? LIMIT 1', $params);
-		$result = $db->executePrepared($stmt)
+		$stmt = $db->prepare('SELECT * FROM users WHERE username=?', $params);
+		$result = $db->executePrepared($stmt);
 	}
 	catch (DatabaseException $e) {
 		databaseErrorPage($smarty, $e->getMessage());
-		
+
 		die();
 	}
-	
-	$user = $result->fetch_assoc();
-	
-	if (!empty($user)) {
-		if (password_verify($password, $user['password'])) {
-			//TODO: login
+
+	var_dump($stmt);
+	var_dump($result);
+
+	$userRow = $result->fetch_assoc();
+
+	var_dump($userRow);
+
+	if (!empty($userRow)) {
+		if (password_verify($password, $userRow['password'])) {
+			$_SESSION['loggedIn'] = true;
+			$_SESSION['user'] = new User(
+				$userRow['id'],
+				$userRow['username'],
+				$userRow['email'],
+				$userRow['realName'],
+				$userRow['registered'],
+				$userRow['last_active'],
+				$userRow['is_admin']
+			);
+
+			redirect($config['root']);
 		}
 	}
 }
