@@ -10,15 +10,14 @@
 
 	<form id="loginForm">
 		<div class="formRow">
-			<label for="username">Username</label>
-			<input id="username" name="username" type="text">
+			<input id="username" name="username" type="text" placeholder="Username">
 		</div>
 		<div class="formRow">
-			<label for="password">Password</label>
-			<input id="password" name="password" type="password">
+			<input id="password" name="password" type="password" placeholder="Password">
 		</div>
-
-		<input class="button" name="login" type="submit" value="Log In">
+		<div class="formRow">
+			<input class="button" name="login" type="submit" value="Log In">
+		</div>
 	</form>
 </div>
 {/block}
