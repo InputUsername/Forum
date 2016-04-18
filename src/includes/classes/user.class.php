@@ -21,6 +21,9 @@ class User {
 		$this->lastActive = $lastActive;
 		$this->isAdmin = $isAdmin;
 
-		$this->profilePicture = md5($id) . '.png';
+		$this->profilePicture = 'uploads/profile/' . md5($id) . '.png';
+		if (!file_exists($this->profilePicture)) {
+			$this->profilePicture = 'custom_assets/profile_default.png';
+		}
 	}
 }
