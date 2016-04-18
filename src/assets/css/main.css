@@ -172,6 +172,10 @@ input.button:hover {
 	margin-right: 1em;
 }
 
+#userControlsImage {
+	height: 40px;
+}
+
 /*** Content ***/
 
 
