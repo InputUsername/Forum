@@ -8,6 +8,15 @@ require_once('includes/error_pages.php');
 require_once('includes/subforum_functions.php');
 
 require_once('includes/classes/database.class.php');
+require_once('includes/classes/user.class.php');
+
+/*********************
+* Start the session
+**********************/
+
+session_start();
+
+$loggedIn = !empty($_SESSION['currentUser']);
 
 /************************
 * Check GET parameters
@@ -107,6 +116,8 @@ while ($row = $result->fetch_assoc()) {
 *************************/
 
 $smarty->assign('pageTitle', 'Forum: ' . $currentSubforum['name']);
+$smarty->assign('loggedIn', $loggedIn);
+$smarty->assign('currentUser', $loggedIn ? $_SESSION['currentUser'] : NULL);
 
 $smarty->assign('currentSubforum', $currentSubforum);
 $smarty->assign('subforums', $subforums);

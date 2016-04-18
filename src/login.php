@@ -10,6 +10,16 @@ require_once('includes/misc.php');
 require_once('includes/classes/database.class.php');
 require_once('includes/classes/user.class.php');
 
+/***********************
+* Start the session
+************************/
+
+session_start();
+
+if (!empty($_SESSION['currentUser'])) {
+	redirect($config['root']);
+}
+
 /************************
 * Connect to database
 *************************/
@@ -27,16 +37,6 @@ catch (DatabaseException $e) {
 	databaseErrorPage($smarty, $e->getMessage(), $e->getCode());
 
 	die();
-}
-
-/***********************
-* Start the session
-************************/
-
-session_start();
-
-if ($_SESSION['loggedIn']) {
-	redirect($config['root']);
 }
 
 /************************
@@ -61,17 +61,13 @@ if (isset($_POST['login']) && isset($_POST['username']) && isset($_POST['passwor
 		die();
 	}
 
-	var_dump($stmt);
-	var_dump($result);
-
 	$userRow = $result->fetch_assoc();
 
 	var_dump($userRow);
 
 	if (!empty($userRow)) {
 		if (password_verify($password, $userRow['password'])) {
-			$_SESSION['loggedIn'] = true;
-			$_SESSION['user'] = new User(
+			$_SESSION['currentUser'] = new User(
 				$userRow['id'],
 				$userRow['username'],
 				$userRow['email'],

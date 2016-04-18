@@ -8,6 +8,14 @@ require_once('includes/error_pages.php');
 require_once('includes/classes/database.class.php');
 require_once('includes/classes/user.class.php');
 
+/*************************
+* Start the session
+**************************/
+
+session_start();
+
+$loggedIn = !empty($_SESSION['currentUser']);
+
 /************************
 * Check GET parameters
 *************************/
@@ -85,6 +93,9 @@ $user = new User(
 *************************/
 
 $smarty->assign('pageTitle', 'User profile: ' . $user->username);
+$smarty->assign('loggedIn', $loggedIn);
+$smarty->assign('currentUser', $loggedIn ? $_SESSION['currentUser'] : NULL);
+
 $smarty->assign('user', $user);
 
 $smarty->display('user.tpl');
