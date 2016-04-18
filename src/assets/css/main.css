@@ -78,6 +78,10 @@ a:hover, a:active {
 	margin-bottom: 1%;
 }
 
+.section h1 {
+	margin-bottom: 1%;
+}
+
 /* Buttons */
 
 .button, .button:link {
@@ -111,8 +115,6 @@ input.button:hover {
 #header {
 	background-color: #aaa;
 	color: #fff;
-
-	overflow: auto;
 
 	position: relative;
 }
