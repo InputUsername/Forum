@@ -8,7 +8,7 @@
 <div class="section" id="loginSection">
 	<h1>Log In</h1>
 
-	<form id="loginForm">
+	<form method="post" id="loginForm">
 		<div class="formRow">
 			<input id="username" name="username" type="text" placeholder="Username">
 		</div>
