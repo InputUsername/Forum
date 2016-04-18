@@ -32,5 +32,11 @@
 		</main>
 		{include file="components/footer.tpl"}
 	</div>
+
+	{* JavaScript, overridable *}
+	{block name="js"}
+	<script src="{$root}assets/js/user_controls.js" type="text/javascript"></script>
+	{/block}
+	{* /JavaScript *}
 </body>
 </html>

@@ -185,7 +185,7 @@ input.button:hover {
 	right: 0;
 	top: calc(50% + 20px);
 
-	padding: 1em;
+	padding: 1em 2em;
 
 	list-style-type: none;
 
@@ -196,6 +196,13 @@ input.button:hover {
 
 #userControlsMenu.open {
 	display: block;
+}
+
+#userControlsMenu li {
+	margin-top: 1em;
+}
+#userControlsMenu li:first-child {
+	margin-top: 0;
 }
 
 /*** Content ***/
