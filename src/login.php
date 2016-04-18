@@ -32,7 +32,31 @@ catch (DatabaseException $e) {
 *************************/
 
 if (isset($_POST['login']) && isset($_POST['username']) && isset($_POST['password'])) {
-	// TODO: login
+	$username = preg_replace('/\W/', '', $_POST['username']);
+	$password = $_POST['password']; //TODO: check password
+	
+	$params = array(
+		's' => $username,
+		's' => $password
+	);
+	
+	try {
+		$stmt = $db->prepare('SELECT * FROM users WHERE username=? LIMIT 1', $params);
+		$result = $db->executePrepared($stmt)
+	}
+	catch (DatabaseException $e) {
+		databaseErrorPage($smarty, $e->getMessage());
+		
+		die();
+	}
+	
+	$user = $result->fetch_assoc();
+	
+	if (!empty($user)) {
+		if (password_verify($password, $user['password'])) {
+			//TODO: login
+		}
+	}
 }
 
 /************************
