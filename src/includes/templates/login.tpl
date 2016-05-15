@@ -8,6 +8,12 @@
 <div class="section" id="loginSection">
 	<h1>Log In</h1>
 
+	{if isset($loginFailed)}
+		<p id="loginFailed">That username/password combination is not correct.</p>
+	{elseif isset($userNotFound)}
+		<p id="userNotFound">That username does not exist.</p>
+	{/if}
+
 	<form method="post" id="loginForm">
 		<div class="formRow">
 			<input id="username" name="username" type="text" placeholder="Username">

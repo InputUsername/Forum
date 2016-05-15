@@ -2,6 +2,14 @@
 	text-align: center;
 }
 
+#loginFailed {
+	margin-top: 1%;
+}
+
 #loginForm {
 	margin-top: 1%;
+}
+
+#submit {
+	margin-bottom: 1%;
 }

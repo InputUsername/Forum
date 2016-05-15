@@ -63,8 +63,6 @@ if (isset($_POST['login']) && isset($_POST['username']) && isset($_POST['passwor
 
 	$userRow = $result->fetch_assoc();
 
-	var_dump($userRow);
-
 	if (!empty($userRow)) {
 		if (password_verify($password, $userRow['password'])) {
 			$_SESSION['currentUser'] = new User(
@@ -79,6 +77,12 @@ if (isset($_POST['login']) && isset($_POST['username']) && isset($_POST['passwor
 
 			redirect($config['root']);
 		}
+		else {
+			$smarty->assign('loginFailed', true);
+		}
+	}
+	else {
+		$smarty->assign('userNotFound', true);
 	}
 }
 
