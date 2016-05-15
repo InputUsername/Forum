@@ -16,7 +16,8 @@
 			<input id="password" name="password" type="password" placeholder="Password">
 		</div>
 		<div class="formRow">
-			<input class="button" name="login" type="submit" value="Log In">
+			<input id="submit" class="button" name="login" type="submit" value="Log In">
+			<p>Don't have an account yet? <a href="{$root}register">Register</a>.</p>
 		</div>
 	</form>
 </div>
