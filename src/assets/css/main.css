@@ -178,12 +178,14 @@ input.button:hover {
 
 #userControlsImage {
 	height: 40px;
+
+	vertical-align: middle;
 }
 
 #userControlsMenu {
 	position: absolute;
 	right: 0;
-	top: calc(50% + 20px);
+	top: 100%;
 
 	padding: 1em 2em;
 
